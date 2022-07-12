@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            #container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                padding: 20px;
+                margin: auto;
+            }
+
+            .box {
+                width: 100%;
+                box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            }
+
+            .box > p {
+                padding-left: 20px;
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+            .box > img {
+                width: 100%;
+            }
+
+            .buttons {
+                padding: 20px;
+            }
+            
+            .buttons > button {
+                color: #fff;
+                padding: 8px;
+                border: none;
+                background-color: rgb(68, 62, 184);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="buttons">
+            <h2>Sorting</h2>
+            <button id="sort-lh">Sort by low rating to high</button>
+            <button id="sort-hl">Sort by High rating to low</button>
+        </div>
+        <div id="container"></div>
+    </body>
+    <script>
+        var movies = [
+        {
+                name: "Mission Mangal",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/1529/571529-v",
+                IMDb_rating: 4.1,
+            },
+            {
+                name: "Human",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/3034/1103034-v-afeac4412b5d",
+                IMDb_rating: 4.2,
+            },
+            {
+                name: "super 30",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/6828/556828-v",
+                IMDb_rating: 4.3,
+            },
+
+            {
+                name: "Tanhaji",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/7676/647676-v",
+                IMDb_rating: 4.4,
+            },
+            {
+                name: "ChhiChhore",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/896/580896-v",
+                IMDb_rating: 4.5,
+            },
+            {
+                name: "Baaghi3",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/6536/846536-v",
+                IMDb_rating: 4.6,
+            },
+            {
+                name: "Raid",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/old_images/vertical/MOVIE/2789/1000212789/1000212789-v",
+                IMDb_rating: 4.5,
+            },
+            {
+                name: "Neeraj",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/old_images/vertical/MOVIE/704/1000090704/1000090704-v",
+                IMDb_rating: 4.7,
+            },
+            {
+                name: "Avengers",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/5157/875157-v",
+                IMDb_rating: 4.5,
+            },
+            {
+                name: "M.S Dhoni",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/old_images/vertical/MOVIE/3314/1770003314/1770003314-v",
+                IMDb_rating: 4.8,
+            },
+            {
+                name: "Houseful 3",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/old_images/vertical/MOVIE/4851/1000104851/1000104851-v",
+                IMDb_rating: 4.9,
+            },
+            {
+                name: "Thor",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/4598/674598-v",
+                IMDb_rating: 4.5,
+            },
+            {
+                name: "Iron Man 3",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/4390/674390-v",
+                IMDb_rating: 5,
+            },
+            {
+                name: "Captain America",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/4583/674583-v",
+                IMDb_rating: 4.6,
+            },
+            {
+                name: "Angreji Medium",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/6699/1026699-v-cb786ee970de",
+                IMDb_rating: 4.8,
+            },
+            {
+                name: "Bhuj",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/4920/1044920-v-1ac34349aead",
+                IMDb_rating: 4.8,
+            },
+            {
+                name: "Singham returns",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/old_images/vertical/MOVIE/4506/1000034506/1000034506-v",
+                IMDb_rating: 4.9,
+            },
+            {
+                name: "Frozen",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/4599/674599-v",
+                IMDb_rating: 4.6,
+            },
+            {
+                name: "Captain Marvel",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_1_5x/sources/r1/cms/prod/5190/875190-v",
+                IMDb_rating: 4.4,
+            },
+            {
+                name: "Titanic",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/old_images/vertical/MOVIE/1166/1770001166/1770001166-v",
+                IMDb_rating: 4.9,
+            },
+            {
+                name: "Avatar",
+                release_date: "31 May 2013",
+                poster: "https://img1.hotstarext.com/image/upload/f_auto,t_web_vl_3x/sources/r1/cms/prod/4291/754291-v",
+                IMDb_rating: 4.8,
+            },
+        ];
+
+        var filteredData = JSON.parse(JSON.stringify(movies));
+        var movieData;
+
+        if (localStorage.getItem("movieData") === null) {
+            movieData = [];
+        } else {
+            movieData = JSON.parse(localStorage.getItem("movieData"));
+        }
+
+        document
+            .querySelector("#sort-lh")
+            .addEventListener("click", lowToHighFn);
+        document
+            .querySelector("#sort-hl")
+            .addEventListener("click", highToLowFn);
+        movieData = JSON.parse(localStorage.getItem("movieData"));
+        function lowToHighFn() {
+            filteredData.sort(function (a, b) {
+                return a.IMDb_rating - b.IMDb_rating;
+            });
+            displayData(filteredData);
+        }
+
+        function highToLowFn() {
+            filteredData.sort(function (a, b) {
+                return b.IMDb_rating - a.IMDb_rating;
+            });
+            displayData(filteredData);
+        }
+        function displayData(movies) {
+            document.querySelector("#container").innerHTML = "";
+            movies.forEach(function (movieData) {
+                var box = document.createElement("div");
+                box.setAttribute("class", "box");
+
+                var Poster = document.createElement("img");
+                Poster.src = movieData.poster;
+
+                var name = document.createElement("p");
+                name.textContent = movieData.name;
+
+                var release_date = document.createElement("p");
+                release_date.textContent = movieData.release_date;
+
+                var IMDb_rating = document.createElement("p");
+                IMDb_rating.textContent = movieData.IMDb_rating;
+
+                box.append(Poster, name, release_date, IMDb_rating);
+                document.querySelector("#container").append(box);
+            });
+        }
+        displayData(movies);
+    </script>
+</html>
